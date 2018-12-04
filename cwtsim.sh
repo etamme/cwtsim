@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # where is the rigctl command
-rigctl=rigctl
+rigctl=./rigctl
 
 # device name
 rigdevice=/dev/ttyUSB0
@@ -9,8 +9,8 @@ rigdevice=/dev/ttyUSB0
 rig=373
 
 # command to execute keyer
-keyer="python keyer.py"
-cwdevice=/dev/ttyUSB0
+keyer="python ./keyer.py"
+cwdevice=/dev/ttyUSB1
 
 # total number of calls per speed floor
 # number of elements must match speed_floors
@@ -25,10 +25,9 @@ callfile=./cwops-members.txt
 
 # setup base frequency, and how much to qsy for tone variation
 base_freq=21040000
-freq_range=250
+freq_range=200
 
 # ---- dont touch anything below here :) ----
-#!/bin/bash
 readkey() {
   local key settings
   settings=$(stty -g)             # save terminal settings
@@ -176,7 +175,7 @@ do
       speed=${speeds[i]}
       freq=${freqs[i]} 
       command="F $freq"
-      $($rigctl -m $rig -r $device $command)
+      $($rigctl -m $rig -r $rigdevice $command)
       continue
     fi
     ;;
